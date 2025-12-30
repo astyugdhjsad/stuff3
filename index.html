@@ -1,98 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Live Network Camera</title>
+  <title>IP CAMERA</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body, html {
       margin: 0;
       padding: 0;
-      background: white;
-      color: black;
+      background: black;
       overflow: hidden;
       font-family: sans-serif;
     }
-
-    #container {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-    }
-
-    #logo {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      width: 180px;
-      z-index: 10;
-    }
-
     #cover {
       width: 100vw;
       height: 100vh;
-      background-color: white;
-      color: black !important; /* Force black text here */
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 1.5em;
-      text-align: center;
+      color: white;
+      font-size: 2em;
       cursor: pointer;
-      padding: 1em;
-      z-index: 5;
+      background-color: #000;
     }
-
     video {
       display: none;
       width: 100vw;
       height: 100vh;
       object-fit: cover;
-      z-index: 1;
     }
   </style>
 </head>
 <body>
 
-  <div id="container">
-    <img id="logo" src="Hikvision-Logo.png" alt="Hikvision Logo">
-    
-    <div id="cover">
-      Click anywhere if the prompt for authentication isn't loading.
-    </div>
+<img src="https://www.directsecuritypartnership.co.uk/wp-content/uploads/2017/05/hikvision-logo.png" alt="Hikvision Camera">
+<div id="cover">If the authentication prompt isn't loading, click here.</div>
+<video id="screamer" preload="auto" playsinline>
+  <source src="sample-5s.mp4" type="video/mp4">
+</video>
 
-    <video id="screamer" preload="auto" playsinline>
-      <source src="sample-5s.mp4" type="video/mp4">
-    </video>
-  </div>
+<script>
+  const btn = document.getElementById('cover');
+  const vid = document.getElementById('screamer');
 
-  <script>
-    const btn = document.getElementById('cover');
-    const vid = document.getElementById('screamer');
+  async function trigger() {
+    btn.style.display = 'none';
+    vid.style.display = 'block';
+    vid.volume = 1;
+    vid.muted = false;
+    await vid.play();
 
-    async function trigger() {
-      btn.style.display = 'none';
-      vid.style.display = 'block';
-      vid.volume = 1;
-      vid.muted = false;
-      await vid.play();
-
-      // Request fullscreen (cross-browser)
-      if (vid.requestFullscreen) {
-        await vid.requestFullscreen();
-      } else if (vid.webkitRequestFullscreen) {
-        await vid.webkitRequestFullscreen();
-      } else if (vid.msRequestFullscreen) {
-        await vid.msRequestFullscreen();
-      }
+    if (vid.requestFullscreen) {
+      vid.requestFullscreen();
+    } else if (vid.webkitRequestFullscreen) {
+      vid.webkitRequestFullscreen();
+    } else if (vid.msRequestFullscreen) {
+      vid.msRequestFullscreen();
     }
+  }
 
-    btn.addEventListener('click', trigger);
-  </script>
+  btn.addEventListener('click', trigger);
+</script>
 
 </body>
 </html>
-
