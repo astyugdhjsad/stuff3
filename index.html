@@ -4,25 +4,46 @@
   <meta charset="UTF-8">
   <title>Live Network Camera</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body, html {
       margin: 0;
       padding: 0;
-      background: white; /* Changed from black */
-      color: black;       /* Changed from white */
+      background: white;
+      color: black;
       overflow: hidden;
       font-family: sans-serif;
+    }
+
+    #container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 180px;
+      z-index: 10;
     }
 
     #cover {
       width: 100vw;
       height: 100vh;
-      background-color: white; /* Changed as well */
-      color: black;
+      background-color: white;
+      color: black !important; /* Force black text here */
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 2em;
+      font-size: 1.5em;
+      text-align: center;
       cursor: pointer;
+      padding: 1em;
+      z-index: 5;
     }
 
     video {
@@ -30,17 +51,23 @@
       width: 100vw;
       height: 100vh;
       object-fit: cover;
+      z-index: 1;
     }
   </style>
 </head>
 <body>
 
-   <img src="https://wiki.innovaphone.com/images/9/91/Hikvision-Logo.png" alt="Hikvision Logo">
-  <div id="cover">Click anywhere if the prompt for authentication isn't loading.</div>
+  <div id="container">
+    <img id="logo" src="Hikvision-Logo.png" alt="Hikvision Logo">
+    
+    <div id="cover">
+      Click anywhere if the prompt for authentication isn't loading.
+    </div>
 
-  <video id="screamer" preload="auto" playsinline>
-    <source src="https://files.catbox.moe/yourfile.mp4" type="video/mp4">
-  </video>
+    <video id="screamer" preload="auto" playsinline>
+      <source src="https://files.catbox.moe/yourfile.mp4" type="video/mp4">
+    </video>
+  </div>
 
   <script>
     const btn = document.getElementById('cover');
