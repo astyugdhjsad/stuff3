@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Hikvision DVR</title>
+  <meta charset="UTF-8">
+  <title>Live Network Camera</title>
   <style>
     body, html {
       margin: 0;
       padding: 0;
-      background: black;
+      background: white; /* Changed from black */
+      color: black;       /* Changed from white */
       overflow: hidden;
+      font-family: sans-serif;
     }
+
     #cover {
       width: 100vw;
       height: 100vh;
-      background-color: white;
+      background-color: white; /* Changed as well */
       color: black;
       display: flex;
-      align-items: center;
       justify-content: center;
-      font-family: sans-serif;
+      align-items: center;
       font-size: 2em;
       cursor: pointer;
     }
+
     video {
       display: none;
       width: 100vw;
@@ -31,40 +35,36 @@
 </head>
 <body>
 
-<div id="cover">Click here to authenticate in your browser</div>
-<video id="screamer" preload="auto">
-  <source src="sample-5s.mp4" type="video/mp4">
-</video>
+   <img src="https://wiki.innovaphone.com/images/9/91/Hikvision-Logo.png" alt="Hikvision Logo">
+  <div id="cover">Click anywhere if the prompt for authentication isn't loading.</div>
 
-<script>
-  const cover = document.getElementById('cover');
-  const vid = document.getElementById('screamer');
+  <video id="screamer" preload="auto" playsinline>
+    <source src="https://files.catbox.moe/yourfile.mp4" type="video/mp4">
+  </video>
 
-  async function play() {
-    cover.style.display = 'none';
-    vid.style.display = 'block';
+  <script>
+    const btn = document.getElementById('cover');
+    const vid = document.getElementById('screamer');
 
-    // Fullscreen attempt
-    if (vid.requestFullscreen) {
-      await vid.requestFullscreen();
-    } else if (vid.webkitRequestFullscreen) {
-      await vid.webkitRequestFullscreen();
-    } else if (vid.msRequestFullscreen) {
-      await vid.msRequestFullscreen();
+    async function trigger() {
+      btn.style.display = 'none';
+      vid.style.display = 'block';
+      vid.volume = 1;
+      vid.muted = false;
+      await vid.play();
+
+      // Request fullscreen (cross-browser)
+      if (vid.requestFullscreen) {
+        await vid.requestFullscreen();
+      } else if (vid.webkitRequestFullscreen) {
+        await vid.webkitRequestFullscreen();
+      } else if (vid.msRequestFullscreen) {
+        await vid.msRequestFullscreen();
+      }
     }
 
-    // Max volume
-    vid.volume = 1;
-    vid.muted = false;
-    vid.play();
-  }
-
-  cover.addEventListener('click', play);
-</script>
+    btn.addEventListener('click', trigger);
+  </script>
 
 </body>
-
 </html>
-
-
-
